@@ -25,11 +25,11 @@ $N$ carros de largo $\ell$ en una vía circular de longitud $L$ (densidad $N/L$)
 s_i = x_{i+1} - x_i - \ell, \qquad s_N = x_1 + L - x_N - \ell
 ```
 
-Para conservar una distancia mínima $s_0$ viajando a velocidad $v$, hace falta $s \ge s_0 + vT$, donde $T$ es el tiempo de separación deseado entre carros. Con un tope $v_{max}$, la velocidad que el conductor busca es:
+Para conservar una distancia mínima $s_0$ viajando a velocidad $v$, hace falta $s \ge s_0 + vT$, donde $T$ es el tiempo de separación deseado entre carros. Con un tope $v_{max}$, la velocidad que el conductor busca, $V(s)$, se define por tramos:
 
-```math
-V(s)=\begin{cases}0 & s\le s_0\\ \dfrac{s-s_0}{T} & s_0<s<s_0+v_{max}T\\ v_{max} & s\ge s_0+v_{max}T\end{cases}
-```
+- $V(s) = 0$ si $s \le s_0$
+- $V(s) = \frac{s-s_0}{T}$ si $s_0 < s < s_0 + v_{max}T$
+- $V(s) = v_{max}$ si $s \ge s_0 + v_{max}T$
 
 El conductor aplica una fuerza (motor o freno) proporcional a la diferencia entre la velocidad deseada y la real. Con $m\,a_i = F_i$ y $F_i = m\,(V(s_i) - v_i)/\tau$:
 
