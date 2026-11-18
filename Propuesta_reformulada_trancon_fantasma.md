@@ -21,25 +21,35 @@ Las ecuaciones son las del anexo aprobado. Resultan ser el modelo de velocidad �
 
 $N$ carros de largo $\ell$ en una vía circular de longitud $L$ (densidad $N/L$). El carro $i$ tiene posición $x_i$ y velocidad $v_i$. La distancia libre al carro de adelante es (el carro $N$ sigue al carro 1):
 
-$$s_i = x_{i+1} - x_i - \ell, \qquad s_N = x_1 + L - x_N - \ell$$
+```math
+s_i = x_{i+1} - x_i - \ell, \qquad s_N = x_1 + L - x_N - \ell
+```
 
 Para conservar una distancia mínima $s_0$ viajando a velocidad $v$, hace falta $s \ge s_0 + vT$, donde $T$ es el tiempo de separación deseado entre carros. Con un tope $v_{max}$, la velocidad que el conductor busca es:
 
-$$V(s)=\begin{cases}0 & s\le s_0\\[2pt] \dfrac{s-s_0}{T} & s_0<s<s_0+v_{max}T\\[4pt] v_{max} & s\ge s_0+v_{max}T\end{cases}$$
+```math
+V(s)=\begin{cases}0 & s\le s_0\\ \dfrac{s-s_0}{T} & s_0<s<s_0+v_{max}T\\ v_{max} & s\ge s_0+v_{max}T\end{cases}
+```
 
 El conductor aplica una fuerza (motor o freno) proporcional a la diferencia entre la velocidad deseada y la real. Con $m\,a_i = F_i$ y $F_i = m\,(V(s_i) - v_i)/\tau$:
 
-$$a_i = \frac{V(s_i)-v_i}{\tau}$$
+```math
+a_i = \frac{V(s_i)-v_i}{\tau}
+```
 
 Es la misma estructura de la caída con arrastre lineal, con una velocidad terminal que depende de la distancia al carro de adelante. Suposiciones: un carril, sin adelantamientos, conductores y carros idénticos, sin ruido.
 
 **Predicciones analíticas.** El flujo uniforme es solución exacta, con $s_e = L/N - \ell$ y $v_e = V(s_e)$. Si $s_e \ge s_0 + v_{max}T$ los carros van a $v_{max}$ sin depender del de adelante y la perturbación se disipa. En el caso contrario, la densidad supera el valor crítico:
 
-$$\rho_c = \frac{1}{\ell + s_0 + v_{max}T}$$
+```math
+\rho_c = \frac{1}{\ell + s_0 + v_{max}T}
+```
 
 Por encima de $\rho_c$, la perturbación de un carro crece si $2V'(s_e) > 1/\tau$. En el tramo lineal $V' = 1/T$, así que la condición es:
 
-$$\tau > \frac{T}{2}$$
+```math
+\tau > \frac{T}{2}
+```
 
 Es el criterio publicado $V' > a/2$ con $a = 1/\tau$ (Nakayama et al. 2016, ec. 2). Lo usamos como referencia y lo verificamos con la simulación.
 
@@ -47,7 +57,9 @@ Es el criterio publicado $V' > a/2$ con $a = 1/\tau$ (Nakayama et al. 2016, ec. 
 
 Implementación propia en Python con NumPy y Matplotlib, usando Euler explícito como en la cinemática por pasos vista en el curso:
 
-$$a_i^n = \frac{V(s_i^n)-v_i^n}{\tau}, \qquad v_i^{n+1} = v_i^n + a_i^n\,\Delta t, \qquad x_i^{n+1} = x_i^n + v_i^{n+1}\,\Delta t$$
+```math
+a_i^n = \frac{V(s_i^n)-v_i^n}{\tau}, \qquad v_i^{n+1} = v_i^n + a_i^n\,\Delta t, \qquad x_i^{n+1} = x_i^n + v_i^{n+1}\,\Delta t
+```
 
 Condición inicial: $x_i(0) = (i-1)\,L/N$, $v_i(0) = v_e$ para $i \ne 1$ y $v_1(0) = v_e - \delta$, con $\delta = 0{,}5$ m/s. El experimento se repite variando $N$ (la densidad) entre 10 y 40 carros.
 
